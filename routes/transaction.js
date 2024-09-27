@@ -107,7 +107,7 @@ router.post('/transaction', [
  *         required: false
  *         schema:
  *           type: integer
- *           example: 10
+ *           example: 3
  *       - name: offset
  *         in: query
  *         description: Number of transaction to skip before starting to collect the result set

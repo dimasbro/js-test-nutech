@@ -99,7 +99,7 @@ CREATE TABLE `users` (
   `email` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
   `first_name` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
   `last_name` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `profile_image` varchar(150) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `profile_image` varchar(150) COLLATE utf8mb3_unicode_ci NULL,
   `password` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
   `balance` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`id`),
