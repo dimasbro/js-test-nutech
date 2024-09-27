@@ -6,7 +6,7 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'User Authentication API',
+            title: 'API Contract SIMS PPOB',
             version: '1.0.0',
             description: 'API documentation for user login and transaction',
         },

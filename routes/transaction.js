@@ -7,16 +7,14 @@ const router = express.Router();
 /**
  * @swagger
  * tags:
- *   name: System
- *   description: Item System
+ *   name: 3. Module Transaction
  */
 
 /**
  * @swagger
  * /balance:
  *   get:
- *     summary: Get balance
- *     tags: [System]
+ *     tags: [3. Module Transaction]
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -27,8 +25,12 @@ const router = express.Router();
  *             schema:
  *               type: object
  *               properties:
- *                 id:
+*                 status:
  *                   type: integer
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: string
  */
 router.get('/balance', verifyToken, getBalance);
 
@@ -36,8 +38,7 @@ router.get('/balance', verifyToken, getBalance);
  * @swagger
  * /topup:
  *   post:
- *     summary: Topup
- *     tags: [System]
+ *     tags: [3. Module Transaction]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -53,9 +54,11 @@ router.get('/balance', verifyToken, getBalance);
  *               - top_up_amount
  *     responses:
  *       200:
- *         description: Profile berhasil di update
+ *         description: Top Up Balance berhasil
  *       403:
- *         description: Transaksi gagal disimpan
+ *         description: Paramter amount hanya boleh angka dan tidak boleh lebih kecil dari 0
+ *       401:
+ *         description: Token tidak tidak valid atau kadaluwarsa
  */
 router.post('/topup', verifyToken, topUp);
 
@@ -63,8 +66,7 @@ router.post('/topup', verifyToken, topUp);
  * @swagger
  * /transaction:
  *   post:
- *     summary: Transaction
- *     tags: [System]
+ *     tags: [3. Module Transaction]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -80,9 +82,11 @@ router.post('/topup', verifyToken, topUp);
  *               - service_code
  *     responses:
  *       200:
- *         description: Profile berhasil di update
+ *         description: Transaksi berhasil
  *       403:
- *         description: Transaksi gagal disimpan
+ *         description: Service ataus Layanan tidak ditemukan
+ *       401:
+ *         description: Token tidak tidak valid atau kadaluwarsa
  */
 router.post('/transaction', [
     check('service_code')
@@ -93,8 +97,7 @@ router.post('/transaction', [
  * @swagger
  * /transaction/history:
  *   get:
- *     summary: Transaction history
- *     tags: [System]
+ *     tags: [3. Module Transaction]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -120,17 +123,23 @@ router.post('/transaction', [
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   type: integer
+ *                 message:
+ *                   type: string
  *                 data:
  *                   type: array
  *                   items:
  *                     type: object
  *                     properties:
- *                       id:
- *                         service_code: string
- *                       amount:
+ *                       offset:
  *                         type: integer
- *       403:
- *         description: Gagal dapatkan data
+ *                       limit:
+ *                         type: integer
+ *                       records:
+ *                         type: string
+ *       401:
+ *         description: Token tidak tidak valid atau kadaluwarsa
  */
 router.get('/transaction/history', verifyToken, getTransactionHistory);
 

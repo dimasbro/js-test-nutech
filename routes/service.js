@@ -6,8 +6,7 @@ const router = express.Router();
  * @swagger
  * /service:
  *   get:
- *     summary: Get service
- *     tags: [Information]
+ *     tags: [2. Module Information]
  *     responses:
  *       200:
  *         description: successfully
@@ -16,8 +15,12 @@ const router = express.Router();
  *             schema:
  *               type: object
  *               properties:
- *                 id:
+ *                 status:
  *                   type: integer
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: string
  */
 router.get('/service', getAllServices);
 

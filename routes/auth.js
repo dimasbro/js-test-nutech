@@ -6,16 +6,14 @@ const router = express.Router();
 /**
  * @swagger
  * tags:
- *   name: Auth
- *   description: User authentication
+ *   name: 1. Module Membership
  */
 
 /**
  * @swagger
  * /register:
  *   post:
- *     summary: Register a new user
- *     tags: [Auth]
+ *     tags: [1. Module Membership]
  *     requestBody:
  *       required: true
  *       content:
@@ -38,9 +36,9 @@ const router = express.Router();
  *               - password
  *     responses:
  *       200:
- *         description: User registrasi berhasil
- *       402:
- *         description: User registrasi gagal
+ *         description: Registrasi berhasil silahkan login
+ *       400:
+ *         description: Paramter email tidak sesuai format
  */
 router.post('/register', [
     check('email')
@@ -59,8 +57,7 @@ router.post('/register', [
  * @swagger
  * /login:
  *   post:
- *     summary: Login a user
- *     tags: [Auth]
+ *     tags: [1. Module Membership]
  *     requestBody:
  *       required: true
  *       content:
@@ -78,8 +75,10 @@ router.post('/register', [
  *     responses:
  *       200:
  *         description: Login sukses
- *       403:
- *         description: Email dan password tidak cocok
+ *       400:
+ *         description: Paramter email tidak sesuai format
+ *       401:
+ *         description: Username atau password salah
  */
 router.post('/login', [
     check('email')

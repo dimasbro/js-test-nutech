@@ -7,17 +7,9 @@ const router = express.Router();
 
 /**
  * @swagger
- * tags:
- *   name: Auth
- *   description: User authentication
- */
-
-/**
- * @swagger
  * /profile:
  *   get:
- *     summary: Get user profile
- *     tags: [Auth]
+ *     tags: [1. Module Membership]
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -28,8 +20,12 @@ const router = express.Router();
  *             schema:
  *               type: object
  *               properties:
- *                 id:
+ *                 status:
  *                   type: integer
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: string
  */
 router.get('/profile', verifyToken, getProfile);
 
@@ -37,8 +33,7 @@ router.get('/profile', verifyToken, getProfile);
  * @swagger
  * /profile/update:
  *   put:
- *     summary: Update user profile
- *     tags: [Auth]
+ *     tags: [1. Module Membership]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -57,9 +52,9 @@ router.get('/profile', verifyToken, getProfile);
  *               - last_name
  *     responses:
  *       200:
- *         description: Profile berhasil di update
- *       403:
- *         description: Profile gagal di update
+ *         description: Update Pofile berhasil
+ *       401:
+ *         description: Token tidak tidak valid atau kadaluwarsa
  */
 router.put('/profile/update', [
     check('first_name')
@@ -72,8 +67,7 @@ router.put('/profile/update', [
  * @swagger
  * /profile/image:
  *   put:
- *     summary: Update user profile image
- *     tags: [Auth]
+ *     tags: [1. Module Membership]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -83,14 +77,16 @@ router.put('/profile/update', [
  *           schema:
  *             type: object
  *             properties:
- *               profileImage:
+ *               file:
  *                 type: string
  *                 format: binary
  *     responses:
  *       200:
- *         description: Profile berhasil di update
- *       403:
- *         description: Profile gagal di update
+ *         description: Update Profile Image berhasil
+ *       400:
+ *         description: Format Image tidak sesuai
+ *       401:
+ *         description: Token tidak tidak valid atau kadaluwarsa
  */
 router.put('/profile/image', upload, verifyToken, updateUserProfileImage);
 
