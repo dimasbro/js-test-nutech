@@ -17,7 +17,7 @@ const upload = multer({
     limits: { fileSize: 1000000 }, // Limit file size to 1MB
     fileFilter: (req, file, cb) => {
         // Check file type
-        const filetypes = /jpeg|jpg|png/;
+        const filetypes = /jpeg|png/;
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
         const mimetype = filetypes.test(file.mimetype);
 
@@ -27,6 +27,6 @@ const upload = multer({
             cb('Error: Images Only!');
         }
     }
-}).single('profileImage'); // Expecting a field named profileImage
+}).single('file'); // Expecting a field named file
 
 module.exports = upload;

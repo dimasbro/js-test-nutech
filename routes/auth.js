@@ -44,18 +44,15 @@ const router = express.Router();
  */
 router.post('/register', [
     check('email')
-        .notEmpty().withMessage('Email harus diisi')
-        .isLength({ min: 10 }).withMessage('Email minimal 10 karakter')
-        .isEmail().withMessage('Email tidak valid'),
+        .notEmpty().withMessage('Parameter email harus di isi')
+        .isEmail().withMessage('Paramter email tidak sesuai format'),
     check('first_name')
-        .notEmpty().withMessage('First name harus diisi')
-        .isLength({ min: 3 }).withMessage('First name minimal 3 karakter'),
+        .notEmpty().withMessage('Parameter first_name harus di isi'),
     check('last_name')
-        .notEmpty().withMessage('Last name harus diisi')
-        .isLength({ min: 3 }).withMessage('Last name minimal 3 karakter'),
+        .notEmpty().withMessage('Parameter last_name harus di isi'),
     check('password')
-        .notEmpty().withMessage('Password harus diisi')
-        .isLength({ min: 8 }).withMessage('Password minimal 8 karakter'),
+        .notEmpty().withMessage('Parameter password harus di isi')
+        .isLength({ min: 8 }).withMessage('Password length minimal 8 karakter'),
 ], register);
 
 /**
@@ -86,12 +83,11 @@ router.post('/register', [
  */
 router.post('/login', [
     check('email')
-        .notEmpty().withMessage('Email harus diisi')
-        .isLength({ min: 10 }).withMessage('Email minimal 10 karakter')
-        .isEmail().withMessage('Email tidak valid'),
+        .notEmpty().withMessage('Parameter email harus di isi')
+        .isEmail().withMessage('Paramter email tidak sesuai format'),
     check('password')
-        .notEmpty().withMessage('Password harus diisi')
-        .isLength({ min: 8 }).withMessage('Password minimal 8 karakter'),
+        .notEmpty().withMessage('Parameter password harus di isi')
+        .isLength({ min: 8 }).withMessage('Password length minimal 8 karakter'),
 ], login);
 
 module.exports = router;

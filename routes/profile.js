@@ -63,11 +63,9 @@ router.get('/profile', verifyToken, getProfile);
  */
 router.put('/profile/update', [
     check('first_name')
-        .notEmpty().withMessage('First name harus diisi')
-        .isLength({ min: 3 }).withMessage('First name minimal 3 karakter'),
+        .notEmpty().withMessage('Parameter first_name harus di isi'),
     check('last_name')
-        .notEmpty().withMessage('Last name harus diisi')
-        .isLength({ min: 3 }).withMessage('Last name minimal 3 karakter'),
+        .notEmpty().withMessage('Parameter last_name harus di isi'),
 ], verifyToken, updateProfile);
 
 /**

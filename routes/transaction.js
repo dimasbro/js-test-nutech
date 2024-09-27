@@ -57,11 +57,7 @@ router.get('/balance', verifyToken, getBalance);
  *       403:
  *         description: Transaksi gagal disimpan
  */
-router.post('/topup', [
-    check('top_up_amount')
-        .notEmpty().withMessage('Topup amount harus diisi')
-        .isNumeric().withMessage('Topup amount harus angka'),
-], verifyToken, topUp);
+router.post('/topup', verifyToken, topUp);
 
 /**
  * @swagger
@@ -90,7 +86,7 @@ router.post('/topup', [
  */
 router.post('/transaction', [
     check('service_code')
-        .notEmpty().withMessage('Service code harus diisi'),
+        .notEmpty().withMessage('Parameter service_code harus di isi'),
 ], verifyToken, postTransaction);
 
 /**
