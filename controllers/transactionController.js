@@ -12,6 +12,7 @@ exports.getBalance = (req, res) => {
 
     db.query('SELECT balance FROM users WHERE email = ?', [emailLogin], (err, results) => {
         if (err) {
+            console.log(err);
             return res.status(401).json({ status: 103, message: 'Gagal mengambil saldo', data: null });
         }
 
@@ -52,6 +53,7 @@ exports.topUp = (req, res) => {
             // Update the user's balance
             db.query('UPDATE users SET balance = balance + ? WHERE id = ?', [top_up_amount, userId], (err, results) => {
                 if (err) {
+                    console.log(err);
                     return res.status(401).json({ status: 103, message: 'Gagal update balance', data: null });
                 }
 
@@ -63,6 +65,7 @@ exports.topUp = (req, res) => {
                 // Record the transaction
                 db.query('INSERT INTO transactions (user_id, amount, transaction_type, description, invoice_number) VALUES (?, ?, ?, ?, ?)', [userId, top_up_amount, 'TOPUP', 'Top Up balance', 'INV'+`${day}${month}${year}`+'-'+increment], (err) => {
                     if (err) {
+                        console.log(err);
                         return res.status(401).json({ status: 103, message: 'Transaksi gagal disimpan', data: null });
                     }
                 

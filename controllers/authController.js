@@ -18,6 +18,7 @@ exports.register = async (req, res) => {
 
     db.query('INSERT INTO users (email, first_name, last_name, password) VALUES (?, ?, ?, ?)', [email, first_name, last_name, hashedPassword], (err, results) => {
         if (err) {
+            console.log(err);
             return res.status(400).json({ status: 102, message: 'User registrasi gagal', data: null });
         }
         res.status(200).json({ status: 0, message: 'Registrasi berhasil silahkan login', data: null });

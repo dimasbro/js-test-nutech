@@ -26,6 +26,7 @@ exports.updateProfile = (req, res) => {
 
     db.query('UPDATE users SET first_name = ?, last_name = ? WHERE email = ?', [first_name, last_name, emailLogin], (err, results) => {
         if (err) {
+            console.log(err);
             return res.status(401).json({ status: 103, message: 'Profile gagal di update', data: null });
         }
 
@@ -50,6 +51,7 @@ exports.updateUserProfileImage = (req, res) => {
     // Update the user's profile image in the database
     db.query('UPDATE users SET profile_image = ? WHERE email = ?', [req.protocol + '://' + req.get('host')+'/'+profileImagePath, emailLogin], (err, results) => {
         if (err) {
+            console.log(err);
             return res.status(401).json({ status: 103, message: 'Profile gambar gagal di update', data: null });
         }
 
