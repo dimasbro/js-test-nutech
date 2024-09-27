@@ -1,5 +1,4 @@
 const express = require('express');
-const upload = require('../middleware/upload'); // Import the upload middleware
 const { check } = require('express-validator');
 const { verifyToken } = require('../middleware/jwt'); // Import JWT middleware
 const { getProfile, updateProfile, updateUserProfileImage } = require('../controllers/profileController'); // Import profile controller
@@ -88,6 +87,6 @@ router.put('/profile/update', [
  *       401:
  *         description: Token tidak tidak valid atau kadaluwarsa
  */
-router.put('/profile/image', upload, verifyToken, updateUserProfileImage);
+router.put('/profile/image', verifyToken, updateUserProfileImage);
 
 module.exports = router;

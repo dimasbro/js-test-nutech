@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const db = require('../config/db'); // Import your DB connection
+const upload = require('../middleware/upload'); // Import the upload middleware
 
 // Get user profile
 exports.getProfile = (req, res) => {
@@ -40,26 +41,32 @@ exports.updateProfile = (req, res) => {
 };
 
 exports.updateUserProfileImage = (req, res) => {
-    const emailLogin = req.emailLogin; // Email login from the verified token
-
-    if (!req.file) {
-        return res.status(400).json({ status: 102, message: 'Field file tidak boleh kosong', data: null });
-    }
-
-    const profileImagePath = req.file.path.replace(/\\/g, '/');; // Get the path of the uploaded file
-
-    // Update the user's profile image in the database
-    db.query('UPDATE users SET profile_image = ? WHERE email = ?', [req.protocol + '://' + req.get('host')+'/'+profileImagePath, emailLogin], (err, results) => {
+    upload.single('file')(req, res, (err) => {
         if (err) {
-            console.log(err);
-            return res.status(401).json({ status: 103, message: 'Profile gambar gagal di update', data: null });
+            return res.status(400).json({ status: 102, message: err.message, data: null });
         }
 
-        db.query('SELECT email, first_name, last_name, profile_image FROM users WHERE email = ?', [emailLogin], (err, results) => {
-            if (err || results.length === 0) {
-                return res.status(401).json({ status: 103, message: 'Profile tidak ditemukan', data: null });
+        const emailLogin = req.emailLogin; // Email login from the verified token
+
+        if (!req.file) {
+            return res.status(400).json({ status: 102, message: 'Field file tidak boleh kosong', data: null });
+        }
+
+        const profileImagePath = req.file.path.replace(/\\/g, '/');; // Get the path of the uploaded file
+
+        // Update the user's profile image in the database
+        db.query('UPDATE users SET profile_image = ? WHERE email = ?', [req.protocol + '://' + req.get('host')+'/'+profileImagePath, emailLogin], (err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(401).json({ status: 103, message: 'Profile gambar gagal di update', data: null });
             }
-            return res.status(200).json({ status: 0, message: 'Sukses', data: results[0] });
+
+            db.query('SELECT email, first_name, last_name, profile_image FROM users WHERE email = ?', [emailLogin], (err, results) => {
+                if (err || results.length === 0) {
+                    return res.status(401).json({ status: 103, message: 'Profile tidak ditemukan', data: null });
+                }
+                return res.status(200).json({ status: 0, message: 'Sukses', data: results[0] });
+            });
         });
     });
 };

@@ -24,9 +24,9 @@ const upload = multer({
         if (mimetype && extname) {
             return cb(null, true);
         } else {
-            cb('Error: Images Only!');
+            return cb(new Error('Format image tidak sesuai'));
         }
     }
-}).single('file'); // Expecting a field named file
+}); // Expecting a field named file
 
 module.exports = upload;
